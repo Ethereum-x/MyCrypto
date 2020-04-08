@@ -62,3 +62,6 @@ package-lock.json
 
 # MacOSX
 .DS_Store
+
+# Ignore js transpiled scripts
+node-scripts/**/*.js
