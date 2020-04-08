@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { AccountList,  FlippablePanel } from 'v2/components';
 import {
   AddressBookContext,
   NetworkContext,
@@ -7,6 +6,7 @@ import {
   SettingsContext,
   StoreContext
 } from 'v2/services/Store';
+import { AccountList, FlippablePanel, MobileNavBar } from 'v2/components';
 import { NetworkId } from 'v2/types';
 import { CustomNodeConfig } from 'v2/types/node';
 import { DEFAULT_NETWORK, IS_ACTIVE_FEATURE } from 'v2/config';
@@ -14,7 +14,6 @@ import { DEFAULT_NETWORK, IS_ACTIVE_FEATURE } from 'v2/config';
 import NetworkNodes from './components/NetworkNodes';
 import AddOrEditNetworkNode from './components/AddOrEditNetworkNode';
 import { AddressBookPanel, AddToAddressBook, GeneralSettings, DangerZone } from './components';
-import MobileNavBar from 'v2/components/MobileNavBar';
 
 function renderAccountPanel() {
   const { accounts } = useContext(StoreContext);

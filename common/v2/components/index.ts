@@ -75,3 +75,4 @@ export {
   SpacedPanelSection,
   RowPanelSection
 } from './FullSizeContentPanel';
+export { default as MobileNavBar } from './MobileNavBar';
