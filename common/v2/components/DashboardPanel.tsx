@@ -81,18 +81,20 @@ export const DashboardPanel = ({
 }: Props) => {
   return (
     <DPanel {...rest}>
-      {heading && (<DHeadingWrapper>
-        <DHeading>{heading}</DHeading>
-        {headingRight &&
-          (actionLink ? (
-            <SRouterLink to={actionLink}>
-              <img src={settingsIcon} alt={'settings'} width={32} />
-              <Typography>{headingRight}</Typography>
-            </SRouterLink>
-          ) : (
+      {heading && (
+        <DHeadingWrapper>
+          <DHeading>{heading}</DHeading>
+          {headingRight &&
+            (actionLink ? (
+              <SRouterLink to={actionLink}>
+                <img src={settingsIcon} alt="settings" width={32} />
+                <Typography>{headingRight}</Typography>
+              </SRouterLink>
+            ) : (
               headingRight
             ))}
-      </DHeadingWrapper>)}
+        </DHeadingWrapper>
+      )}
       {padChildren ? <Content>{children}</Content> : children}
       {footer && <DFooterWrapper>{footer}</DFooterWrapper>}
     </DPanel>
