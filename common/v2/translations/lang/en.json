@@ -791,10 +791,6 @@
     "MEMBERSHIP_LIFETIME_TITLE": "I Love MyCrypto",
     "MEMBERSHIP_LIFETIME_DESC": "Lifetime of Love!",
     "MEMBERSHIP_LIFETIME_EMOJI": "I 💖 MyCrypto",
-    "NEW_MEMBER": "You are now a MyCrypto Member!",
-    "CHECKOUT_CTA": "Next: Purchase for MyCrypto account",
-    "CHECKOUT_OTHER_CTA": "Next: Purchase for a different account",
-    "EXTERNAL_NAVIGATION_WARNING": "This will open buy.mycrypto.com in a new tab.",
     "NETWORK_AND_NODES": "Network & Nodes",
     "AUTO_NODE": "Auto",
     "CUSTOM_NODE_SUBTITLE": "Your node must be HTTPS in order to connect to it via MyCrypto.com. You can $myCryptoRepo to connect to any node. Or, get a free SSL certificate via $letsEncrypt.",
@@ -813,6 +809,10 @@
     "CUSTOM_NODE_FORM_PASSWORD": "Password",
     "CUSTOM_NODE_SETTINGS_TABLE_NETWORK_HEADER": "Network",
     "CUSTOM_NODE_SETTINGS_TABLE_NETWORK_NODE": "Default Node",
-    "CUSTOM_NODE_DROPDOWN_NEW_NODE": "Custom"
+    "CUSTOM_NODE_DROPDOWN_NEW_NODE": "Custom",
+    "NEW_MEMBER": "You are now a MyCrypto Member!",
+    "CHECKOUT_CTA": "Next: Purchase for MyCrypto account",
+    "CHECKOUT_OTHER_CTA": "Next: Purchase for a different account",
+    "EXTERNAL_NAVIGATION_WARNING": "This will open buy.mycrypto.com in a new tab."
   }
 }
