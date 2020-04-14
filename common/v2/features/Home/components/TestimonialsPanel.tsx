@@ -3,13 +3,13 @@ import { Panel } from '@mycrypto/ui';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 
+import { translateRaw } from 'v2/translations';
 import { BREAK_POINTS, COLORS } from 'v2/theme';
 import './SliderImports.scss';
 
 import sparkles1Icon from 'common/assets/images/icn-sparkles-1.svg';
 import sparkles2Icon from 'common/assets/images/icn-sparkles-2.svg';
 import sparkles3Icon from 'common/assets/images/icn-sparkles-3.svg';
-import { translateRaw } from '../../../translations';
 
 const { SCREEN_XS, SCREEN_SM, SCREEN_XXL } = BREAK_POINTS;
 const { GREYISH_BROWN } = COLORS;
