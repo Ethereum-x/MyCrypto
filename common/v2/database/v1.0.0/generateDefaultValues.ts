@@ -25,7 +25,7 @@ const addNetworks = add(LSKeys.NETWORKS)((networks: SeedData) => {
   const formatNetwork = (n: NetworkLegacy): Network => {
     const baseAssetUuid = generateAssetUUID(n.chainId);
     return {
-      // Also availbale are: blockExplorer, tokenExplorer, tokens aka assets, contracts
+      // Also available are: blockExplorer, tokenExplorer, tokens aka assets, contracts
       id: n.id,
       name: n.name,
       chainId: n.chainId,
@@ -44,7 +44,7 @@ const addNetworks = add(LSKeys.NETWORKS)((networks: SeedData) => {
       assets: [],
       baseAsset: baseAssetUuid, // Set baseAssetUuid
       baseUnit: n.unit,
-      nodes: NODES_CONFIG[n.name as NetworkId]
+      nodes: NODES_CONFIG[n.id]
     };
   };
 

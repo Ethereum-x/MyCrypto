@@ -9,7 +9,7 @@ import { DEFAULT_NETWORK } from 'v2/config';
 import { Typography, Dropdown, Tooltip } from 'v2/components';
 
 interface Props {
-  network: string | undefined;
+  network: NetworkId;
   accountType?: WalletId;
   className?: string;
   showTooltip?: boolean;
@@ -29,17 +29,17 @@ const NetworkOption = ({ option, onSelect }: OptionComponentProps) => (
 );
 
 function NetworkSelectDropdown({
-  network,
+  network: networkId,
   accountType,
   onChange,
   showTooltip = false,
   ...props
 }: Props) {
-  const { networks } = useContext(NetworkContext);
+  const { networks, getNetworkById } = useContext(NetworkContext);
 
   // set default network if none selected
   useEffect(() => {
-    if (!network) {
+    if (!networkId) {
       onChange(DEFAULT_NETWORK);
     }
   }, []);
@@ -50,6 +50,7 @@ function NetworkSelectDropdown({
     // @ts-ignore CHANGE IN WALLETYPE OBJECT CAUSING accountType to error -> TODO: FIX accountType
     .filter(options => isWalletFormatSupportedOnNetwork(options, accountType))
     .map(n => ({ label: n.name, value: n }));
+  const network = getNetworkById(networkId);
 
   return (
     <div {...props}>
@@ -58,7 +59,7 @@ function NetworkSelectDropdown({
         {showTooltip && <Tooltip tooltip={translate('NETWORK_TOOLTIP')} />}
       </label>
       <Dropdown
-        value={{ label: network }}
+        value={{ label: network!.name }}
         options={validNetworks.sort()}
         placeholder={DEFAULT_NETWORK}
         searchable={true}

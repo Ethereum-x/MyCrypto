@@ -28,7 +28,8 @@ describe('AddAccountFlow', () => {
       <NetworkContext.Provider
         value={
           ({
-            networks: []
+            networks: [],
+            getNetworkById: () => ({})
           } as unknown) as INetworkContext
         }
       >
