@@ -106,11 +106,10 @@ export default class SimpleGas extends Component<Props> {
     };
 
     const recommended = gasTooltips[gas] || '';
-    const x = translateRaw('GAS_GWEI_COST', {
+
+    return translateRaw('GAS_GWEI_COST', {
       $gas: gas.toString(),
       $recommended: recommended
     });
-
-    return x;
   };
 }

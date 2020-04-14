@@ -69,9 +69,6 @@ const SEditableText = styled(EditableText)`
   }
 `;
 
-export const screenIsMobileSized = (breakpoint: number): boolean =>
-  window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
-
 export default function AddressBook({
   addressBook,
   toggleFlipped,
@@ -83,7 +80,14 @@ export default function AddressBook({
   const overlayRows = [deletingIndex];
 
   const addressBookTable = {
-    head: ['Favorite', 'Label', 'Address', 'Network', 'Notes', 'Delete'],
+    head: [
+      translateRaw('ADDRESSBOOK_FAVORITE') || 'Favorite',
+      translateRaw('ADDRESSBOOK_LABEL') || 'Label',
+      translateRaw('ADDRESSBOOK_ADDRESS'),
+      translateRaw('ADDRESSBOOK_NETWORK'),
+      translateRaw('ADDRESSBOOK_NOTES'),
+      translateRaw('ADDRESSBOOK_DELETE') || 'Delete'
+    ],
     overlay:
       overlayRows && overlayRows[0] !== undefined ? (
         <RowDeleteOverlay
@@ -124,15 +128,21 @@ export default function AddressBook({
       ]
     ),
     config: {
-      primaryColumn: 'Label',
-      sortableColumn: 'Label',
+      primaryColumn: translateRaw('ADDRESSBOOK_LABEL') || 'Label',
+      sortableColumn: translateRaw('ADDRESSBOOK_LABEL') || 'Label',
       sortFunction: (a: any, b: any) => {
         const aLabel = a.props.label;
         const bLabel = b.props.label;
         return aLabel === bLabel ? true : aLabel.localeCompare(bLabel);
       },
-      hiddenHeadings: ['Favorite', 'Delete'],
-      iconColumns: ['Favorite', 'Delete']
+      hiddenHeadings: [
+        translateRaw('ADDRESSBOOK_FAVORITE') || 'Favorite',
+        translateRaw('ADDRESSBOOK_DELETE') || 'Delete'
+      ],
+      iconColumns: [
+        translateRaw('ADDRESSBOOK_FAVORITE') || 'Favorite',
+        translateRaw('ADDRESSBOOK_DELETE') || 'Delete'
+      ]
     }
   };
   return (
