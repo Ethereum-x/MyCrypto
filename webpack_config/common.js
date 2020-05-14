@@ -1,10 +1,14 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const StyleLintPlugin = require('stylelint-webpack-plugin')
+const StyleLintPlugin = require('stylelint-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const config = require('./config');
+const { generateChunkName } = require('./utils');
 
 const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 
@@ -13,7 +17,7 @@ module.exports = {
 
   entry: {
     badBrowserCheck: path.join(config.path.src, 'badBrowserCheck.ts'),
-    client: path.join(config.path.src, 'index.tsx')
+    main: path.join(config.path.src, 'index.tsx')
   },
 
   output: {
@@ -25,14 +29,29 @@ module.exports = {
 
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.css', '.json', '.scss'],
-    modules: [
-      config.path.src,
-      config.path.modules,
-      config.path.root
-    ],
+    modules: [config.path.src, config.path.modules, config.path.root],
     alias: {
       modernizr$: path.resolve(__dirname, '../.modernizrrc.js'),
       '@fixtures': `${config.path.root}/jest_config/__fixtures__`
+    },
+    plugins: [new TsconfigPathsPlugin({ configFile: path.resolve(__dirname, '../tsconfig.json') })]
+
+  },
+
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendorDev: {
+          test: new RegExp(`[\\/]node_modules[\\/](${config.chunks.devOnly.join('|')})[\\/]`),
+          name: generateChunkName
+        },
+        vendorElectron: {
+          enforce: true,
+          test: new RegExp(`[\\/]node_modules[\\/](${config.chunks.electronOnly.join('|')})[\\/]`),
+          name: generateChunkName
+        }
+      }
     }
   },
 
@@ -49,6 +68,8 @@ module.exports = {
             options: {
               cacheDirectory: true,
               cacheCompression: false,
+              // allow lodash-webpack-plugin to reduce lodash size.
+              plugins: ['lodash', 'recharts']
             }
           }
         ],
@@ -58,7 +79,7 @@ module.exports = {
           config.path.electron,
           config.path.testConfig
         ],
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
 
       /**
@@ -66,9 +87,7 @@ module.exports = {
        */
       {
         test: /\.worker\.js$/,
-        use: [
-          'worker-loader'
-        ]
+        use: ['worker-loader']
       },
 
       /**
@@ -82,7 +101,7 @@ module.exports = {
             options: {
               hash: 'sha512',
               digest: 'hex',
-              name: 'common/assets/[name].[contenthash].[ext]'
+              name: 'src/assets/[name].[contenthash].[ext]'
             }
           },
           {
@@ -114,10 +133,7 @@ module.exports = {
             }
           }
         ],
-        include: [
-          config.path.assets,
-          config.path.modules
-        ]
+        include: [config.path.assets, config.path.modules]
       },
 
       /**
@@ -129,14 +145,11 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: 'common/assets/[name].[contenthash].[ext]'
+              name: 'src/assets/[name].[contenthash].[ext]'
             }
           }
         ],
-        include: [
-          config.path.assets,
-          config.path.modules
-        ]
+        include: [config.path.assets, config.path.modules]
       },
 
       /**
@@ -173,7 +186,7 @@ module.exports = {
       },
       metaCsp: IS_DEVELOPMENT
         ? ''
-        : "default-src 'none'; script-src 'self'; worker-src 'self' blob:; child-src 'self'; style-src 'self' 'unsafe-inline'; manifest-src 'self'; font-src 'self'; img-src 'self' data: https://cdn.mycryptoapi.com/; connect-src *; frame-src 'self' https://connect.trezor.io;"
+        : "default-src 'none'; script-src 'self'; worker-src 'self' blob:; child-src 'self'; style-src 'self' 'unsafe-inline'; manifest-src 'self'; font-src 'self'; img-src 'self' data: https://mycryptoapi.com/api/v1/images/; connect-src *; frame-src 'self' https://connect.trezor.io;"
     }),
 
     new CopyWebpackPlugin([
@@ -184,11 +197,14 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin({
       tsconfig: path.join(config.path.root, 'tsconfig.json'),
       tslint: path.join(config.path.root, 'tslint.json'),
-      reportFiles: [
-        '**/*.{ts,tsx}',
-        '!node_modules/**/*'
-      ]
-    })
+      reportFiles: ['**/*.{ts,tsx}', '!node_modules/**/*']
+    }),
+
+    // Allow tree shaking for lodash
+    new LodashModuleReplacementPlugin(),
+
+    // Ignore all locale files of moment.js
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ],
 
   stats: {
@@ -200,7 +216,7 @@ module.exports = {
   },
 
   performance: {
-    hints: false
+    hints: 'warning'
   },
 
   externals: [

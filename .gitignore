@@ -6,6 +6,7 @@ npm-debug.log*
 
 # Build
 dist
+storybook-static
 
 # Runtime data
 pids
@@ -62,3 +63,7 @@ package-lock.json
 
 # MacOSX
 .DS_Store
+
+# Ignore js transpiled scripts
+node-scripts/**/*.js
+/node-scripts/translations/__mocks__/sample.json

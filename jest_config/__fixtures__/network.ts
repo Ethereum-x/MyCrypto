@@ -1,4 +1,4 @@
-import { Network, NodeType, TUuid, TSymbol, BlockExplorer } from 'v2/types';
+import { Network, NodeType, TUuid, TSymbol, BlockExplorer } from '@types';
 
 export const fNetwork: Network = {
   id: 'Ropsten',
@@ -14,10 +14,6 @@ export const fNetwork: Network = {
   },
   dPaths: {
     TREZOR: {
-      label: 'Testnet (ETH)',
-      value: "m/44'/1'/0'/0"
-    },
-    SAFE_T_MINI: {
       label: 'Testnet (ETH)',
       value: "m/44'/1'/0'/0"
     },
@@ -49,7 +45,7 @@ export const fNetwork: Network = {
   nodes: [
     {
       name: 'ropsten_infura',
-      type: 'infura' as NodeType,
+      type: NodeType.INFURA,
       service: 'Infura',
       url: 'https://ropsten.infura.io/v3/c02fff6b5daa434d8422b8ece54c7286'
     }
